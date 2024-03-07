@@ -13,8 +13,8 @@ export const POST = (async function updateUserMetadata(req) {
 
         var updatedUser = {
             user_metadata: {
-                last4: '0985',
-                loanId: '8675309'
+                last4: req.body.last4,
+                loanId: req.body.loanId
             }
         }
 
