@@ -31,6 +31,14 @@ const Hero = () => (
       testId="navbar-login-desktop">
       Log in with Passwordless (Email Code)
     </AnchorLink>
+    <br></br>
+    <br></br>
+    <AnchorLink
+      href="/api/auth/login?connection=TestCustomDB"
+      className="btn btn-primary btn-margin"
+      testId="navbar-login-desktop">
+      Log in with Custom DB
+    </AnchorLink>
   </div>
 );
 
