@@ -44,5 +44,22 @@ app.get('/api/shows', checkJwt, (req, res) => {
   });
 });
 
+const { 
+  v1: uuidv1,
+  v4: uuidv4,
+} = require('uuid');
+
+app.get('/api/login', (req, res) => {
+  console.log('in req');
+  res.status(200);
+  res.send({
+    user_id: uuidv1(),
+    nickname: 'testnickname'
+  })
+});
+
 const server = app.listen(port, () => console.log(`API Server listening on port ${port}`));
 process.on('SIGINT', () => server.close());
+process.on('uncaughtException', function (err) {
+  console.log(err);
+}); 

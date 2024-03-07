@@ -13,7 +13,7 @@ const Hero = () => (
       href="/api/auth/login?organization=org_0sum6KkjuJTaDjSZ"
       className="btn btn-primary btn-margin"
       testId="navbar-login-desktop">
-      Log in with UA Org
+      Log in with Organization
     </AnchorLink>
     <br></br>
     <br></br>
@@ -22,6 +22,14 @@ const Hero = () => (
       className="btn btn-primary btn-margin"
       testId="navbar-login-desktop">
       Log in with Okta SAML
+    </AnchorLink>
+    <br></br>
+    <br></br>
+    <AnchorLink
+      href="/api/auth/login?connection=email"
+      className="btn btn-primary btn-margin"
+      testId="navbar-login-desktop">
+      Log in with Passwordless (Email Code)
     </AnchorLink>
   </div>
 );
