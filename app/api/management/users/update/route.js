@@ -10,11 +10,11 @@ export const POST = (async function updateUserMetadata(req) {
             clientSecret: process.env.AUTH0_CLIENT_SECRET
         });
         const res = new NextResponse();
-
+        const body = await req.json();
         var updatedUser = {
             user_metadata: {
-                last4: req.body.last4,
-                loanId: req.body.loanId
+                last4: body.last4,
+                loanId: body.loanId
             }
         }
 

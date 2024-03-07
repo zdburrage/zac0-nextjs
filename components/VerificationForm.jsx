@@ -1,5 +1,5 @@
 import { Row, Col, Button, Input, Label } from 'reactstrap';
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { jwtDecode } from 'jwt-decode';
 import { useState } from 'react';
 
@@ -11,6 +11,7 @@ export default function VerificationForm() {
     });
 
     const router = useSearchParams();
+    const navigator = useRouter();
     const state = router.get('state');
     const details = decodeSessionToken(router);
 
@@ -25,7 +26,9 @@ export default function VerificationForm() {
         });
 
         const data = await response.json();
-        console.log(data);
+        if (response.status === 200) {
+            location.assign(`https://login.zacsandbox.com/continue?state=${state}`);
+        }
     };
 
     const handleInputChange = (event) => {
@@ -40,10 +43,10 @@ export default function VerificationForm() {
         <form onSubmit={handleSubmit}>
             <Row>
                 <Col>
-                    <Label htmlFor="last4SSN">Last 4 of SSN</Label>
+                    <Label htmlFor="last4">Last 4 of SSN</Label>
                 </Col>
                 <Col>
-                    <Input id="last4SSN" type="number" name="last4SSN" value={formData.last4} onChange={handleInputChange} />
+                    <Input id="last4" name="last4" value={formData.last4} onChange={handleInputChange} />
                 </Col>
             </Row>
             <Row>
