@@ -1,17 +1,40 @@
-import { useForm, ValidationError } from "@formspree/react";
 import { Row, Col, Button, Input, Label } from 'reactstrap';
-import AnchorLink from './AnchorLink';
 import { useSearchParams } from 'next/navigation'
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import { useState } from 'react';
 
 export default function VerificationForm() {
-    const [state, handleSubmit] = useForm("v_form");
-    const router = useSearchParams();
-    var details = decodeSessionToken(router);
 
-    if (state.succeeded) {
-        return <p>Thanks for your submission!</p>;
-    }
+    const [formData, setFormData] = useState({
+        last4: '',
+        loanId: '',
+    });
+
+    const router = useSearchParams();
+    const state = router.get('state');
+    const details = decodeSessionToken(router);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const response = await fetch(`/api/management/users/update?${details.sub}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        const data = await response.json();
+        console.log(data);
+    };
+
+    const handleInputChange = (event) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value,
+        });
+    };
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -20,39 +43,29 @@ export default function VerificationForm() {
                     <Label htmlFor="last4SSN">Last 4 of SSN</Label>
                 </Col>
                 <Col>
-                    <Input id="last4SSN" type="number" name="last4SSN" />
+                    <Input id="last4SSN" type="number" name="last4SSN" value={formData.last4} onChange={handleInputChange} />
                 </Col>
-                <ValidationError prefix="Last 4 SSN" field="last4SSN" errors={state.errors} />
             </Row>
             <Row>
                 <Col>
                     <Label htmlFor="loanId">Loan ID</Label>
                 </Col>
                 <Col>
-                    <Input id="loanId" name="loanId" />
+                    <Input id="loanId" name="loanId" value={formData.loanId} onChange={handleInputChange} />
                 </Col>
-                <ValidationError prefix="Loan ID" field="loanId" errors={state.errors} />
             </Row>
             <Row>
                 <Col></Col>
-                <Button style={{'margin': '5%'}} className="form-button" type="submit" disabled={state.submitting}>
+                <Button style={{ 'margin': '5%' }} className="form-button" type="submit">
                     Submit
                 </Button>
                 <Col></Col>
             </Row>
-            <ValidationError errors={state.errors} />
         </form>
     );
 }
 
 
-function handleSubmit() {
-    //TODO
-}
-
 function decodeSessionToken(router) {
-    var token = jwtDecode(router.get('session_token'));
-    var state = router.get('state');
-    console.log(token);
-    console.log(state);
+    return jwtDecode(router.get('session_token'));
 }
