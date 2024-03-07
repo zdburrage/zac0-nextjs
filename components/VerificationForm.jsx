@@ -16,7 +16,7 @@ export default function VerificationForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await fetch(`/api/management/users/update?${details.sub}`, {
+        const response = await fetch(`/api/management/users/update?user_id=${details.sub}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
