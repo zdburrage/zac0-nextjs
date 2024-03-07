@@ -41,3 +41,7 @@ p code {
 .nav-link {
   color: white !important;
 }
+
+.form-button {
+  right: 0;
+}
