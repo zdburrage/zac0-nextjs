@@ -1,5 +1,5 @@
 function buildAuthParams(nextUrl) {
-    const params = ['connection', 'organization'];
+    const params = ['connection', 'organization', 'discountCode'];
     var authParams = {
 
     };
