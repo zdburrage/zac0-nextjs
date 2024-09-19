@@ -39,6 +39,15 @@ const Hero = () => (
       testId="navbar-login-desktop">
       Log in with Custom DB
     </AnchorLink>
+    <br></br>
+    <br></br>
+
+    <AnchorLink
+      href="/api/auth/login?acr_values=http://schemas.openid.net/pape/policies/2007/06/multi-factor"
+      className="btn btn-primary btn-margin"
+      testId="navbar-login-desktop">
+      Step Up MFA
+    </AnchorLink>
   </div>
 );
 
